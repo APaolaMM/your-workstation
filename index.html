@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Estación de trabajo</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 2_Your Workstation.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Estación de Trabajo</legend>
+	<div id="test">
+		<div class="cuestion">1. Seleccione un punto a tomar en cuenta en la estaci&oacute;n de trabajo entre los siguientes:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a :Desarrollo de un plan de despliegue inform&aacute;tico que incluya cuestiones de seguridad.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Autenticar las redes utilizadas en el trabajo.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Utilizar el escritorio remoto a trav&eacute;s de VPN.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. Seleccione un punto a tomar en cuenta en la estaci&oacute;n de trabajo entre los siguientes:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Cambiar el puerto por defecto de RDP.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b :Establecer una lista de acceso mediante NLA.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Configurar los clientes de servicios de red para mejorar la seguridad.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. Seleccione un punto a tomar en cuenta en la estaci&oacute;n de trabajo entre los siguientes:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Dispositivos bajo la pol&iacute;tica BYOD.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Identificar y activar los mecanismos de registro del sistema y de la red mecanismos de registro de la red.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Crear una tabla de direcciones. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. Seleccione un punto a tomar en cuenta en la estación de trabajo entre los siguientes:",
+				respuestas:
+				{
+					a: "Desarrollo de un plan de despliegue informático que incluya cuestiones de seguridad.",
+					b: "Autenticar las redes utilizadas en el trabajo.",
+					c: "Utilizar el escritorio remoto a través de VPN.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "2. Seleccione un punto a tomar en cuenta en la estación de trabajo entre los siguientes:",
+				respuestas:
+				{
+					a: "Cambiar el puerto por defecto de RDP.",
+					b: "Establecer una lista de acceso mediante NLA.",
+					c: "Configurar los clientes de servicios de red para mejorar la seguridad.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "3. Seleccione un punto a tomar en cuenta en la estación de trabajo entre los siguientes:",
+				respuestas:
+				{
+					a: "Dispositivos bajo la política BYOD.",
+					b: "Identificar y activar los mecanismos de registro del sistema y de la red mecanismos de registro de la red.",
+					c: "Crear una tabla de direcciones.",
+				},
+				respuestaCorrecta: "b",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>

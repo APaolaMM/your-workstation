@@ -1,0 +1,11 @@
+.preguntasportema{
+    background: linear-gradient(to right, #020745, #75060e);
+    color: white;
+    margin: 5%;
+}
+body {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
